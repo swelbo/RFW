@@ -257,7 +257,16 @@ else:
 
 print('Calculate taxon contribution to functions...')
 
-cmdstr='python get_fun_contri.py '+output_dir + '/taxon_fun/'+anno_type+'fun_taxon.csv'+' '+output_dir+' '+output_dir + '/rel_abu.csv'+' '+str(processors)
+get_fun_contri_path = os.path.join(script_dir, 'get_fun_contri.py')
+
+if not os.path.exists(get_fun_contri_path):
+    raise FileNotFoundError(f'Cannot find get_fun_contri.py at {get_fun_contri_path}')
+
+fun_taxon_csv = os.path.join(output_dir, 'taxon_fun', f'{anno_type}fun_taxon.csv')
+rel_abu_csv = os.path.join(output_dir, 'rel_abu.csv')
+
+cmdstr = f'python "{get_fun_contri_path}" "{fun_taxon_csv}" "{output_dir}" "{rel_abu_csv}" "{processors}"'
+
 #print(cmdstr)
 os.system(cmdstr)
 
